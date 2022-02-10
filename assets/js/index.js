@@ -29,18 +29,34 @@ function MyArrayPrototype() {
     }
   };
 
+  this.map = function(callback) {
+    let newArr = new MyArray();
+    for(let i = 0; i < this.length; i++) {
+      newArr.push(callback(this[i], i, this))
+    }
+    return newArr;
+  };
+
+
 
 }
 
 
 MyArray.prototype = new MyArrayPrototype;
 
-const arr = new MyArray();
+const arr = new this.MyArray();
 
 arr.push(1);
-arr.push(2213123); 
+arr.push(2213123);
+arr.push('test'); 
 
 //пример выполнения forEach
 let a = arr.forEach(function count(val, index, arr){
   console.log(`Item ${val} has index ${index}`);
 }) 
+
+//пример выполнения map
+
+let b = arr.map(function sqrt(val){
+  return val * 2;
+});
