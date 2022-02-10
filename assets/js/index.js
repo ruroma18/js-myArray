@@ -44,6 +44,15 @@ function MyArrayPrototype() {
     this[0] = value;
     this.length++;
     return this.length;
+  };
+
+  this.shift = function () {
+    const value = this[0];
+    for (let i = 0; i < this.length; i++) {
+      this[i] = this[i + 1];
+    }
+    this.pop();
+    return value;
 
   }
 
