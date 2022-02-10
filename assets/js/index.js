@@ -23,21 +23,29 @@ function MyArrayPrototype() {
     return value;
   };
 
-  this.forEach = function(callback) {
-    for(let i = 0; i < this.length; i++) {
+  this.forEach = function (callback) {
+    for (let i = 0; i < this.length; i++) {
       callback(this[i], i, this);
     }
   };
 
-  this.map = function(callback) {
+  this.map = function (callback) {
     let newArr = new MyArray();
-    for(let i = 0; i < this.length; i++) {
+    for (let i = 0; i < this.length; i++) {
       newArr.push(callback(this[i], i, this))
     }
     return newArr;
   };
 
+  this.unshift = function (value) {
+    for (let i = 0; i < this.length; i++) {
+      this[this.length - i] = this[this.length - (1 + i)];
+    }
+    this[0] = value;
+    this.length++;
+    return this.length;
 
+  }
 
 }
 
@@ -48,15 +56,15 @@ const arr = new this.MyArray();
 
 arr.push(1);
 arr.push(2213123);
-arr.push('test'); 
+arr.push('test');
 
 //пример выполнения forEach
-let a = arr.forEach(function count(val, index, arr){
+let a = arr.forEach(function count(val, index, arr) {
   console.log(`Item ${val} has index ${index}`);
-}) 
+})
 
 //пример выполнения map
 
-let b = arr.map(function sqrt(val){
+let b = arr.map(function sqrt(val) {
   return val * 2;
 });
