@@ -40,6 +40,7 @@ function MyArrayPrototype() {
   this.unshift = function (value) {
     for (let i = 0; i < this.length; i++) {
       this[this.length - i] = this[this.length - (1 + i)];
+      console.log(this);
     }
     this[0] = value;
     this.length++;
@@ -51,10 +52,17 @@ function MyArrayPrototype() {
     for (let i = 0; i < this.length; i++) {
       this[i] = this[i + 1];
     }
-    this.pop();
+    delete this[this.length - 1];
+    this.length--;
     return value;
+  };
 
-  }
+  this.reverse = function () {
+    for (let i = 0; i < Math.floor(this.length / 2); i++) {
+      [this[i], this[this.length - 1 - i]] = [this[this.length - 1 - i], this[i]];
+    }
+    return this;
+  };
 
 }
 
@@ -66,6 +74,8 @@ const arr = new this.MyArray();
 arr.push(1);
 arr.push(2213123);
 arr.push('test');
+arr.push(12312312312);
+arr.push('ololo');
 
 //пример выполнения forEach
 let a = arr.forEach(function count(val, index, arr) {
