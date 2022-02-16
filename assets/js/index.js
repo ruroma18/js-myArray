@@ -1,18 +1,12 @@
 'use strict';
 
-function MyArray() {
-  this.length = 0;
-};
+class MyArray {
 
+  constructor() {
+    this.length = 0;
+  }
 
-function isMyArray(arg) {
-  return arg instanceof MyArray;
-}
-
-
-function MyArrayPrototype() {
-
-  this[Symbol.iterator] = function () {
+  [Symbol.iterator] = function () {
     let i = 0;
     let context = this;
     const returnObject = {
@@ -27,7 +21,11 @@ function MyArrayPrototype() {
     return returnObject;
   }
 
-  this.push = function (...value) {
+  isMyArray(arg) {
+    return arg instanceof MyArray;
+  }
+
+  push = function (...value) {
     for (let i of value) {
       this[this.length] = i;
       this.length++;
@@ -36,7 +34,7 @@ function MyArrayPrototype() {
     return this.length;
   };
 
-  this.pop = function () {
+  pop = function () {
     const value = this[this.length - 1];
     delete this[this.length - 1];
     this.length--;
@@ -44,13 +42,13 @@ function MyArrayPrototype() {
     return value;
   };
 
-  this.forEach = function (callback) {
+  forEach = function (callback) {
     for (let i = 0; i < this.length; i++) {
       callback(this[i], i, this);
     };
   };
 
-  this.map = function (callback) {
+  map = function (callback) {
     let newArr = new MyArray();
     for (let i = 0; i < this.length; i++) {
       newArr.push(callback(this[i], i, this))
@@ -59,18 +57,16 @@ function MyArrayPrototype() {
     return newArr;
   };
 
-  this.unshift = function (value) {
+  unshift = function (value) {
     for (let i = 0; i < this.length; i++) {
       this[this.length - i] = this[this.length - (1 + i)];
-      console.log(this);
     };
-
     this[0] = value;
     this.length++;
     return this.length;
   };
 
-  this.shift = function () {
+  shift = function () {
     const value = this[0];
     for (let i = 0; i < this.length; i++) {
       this[i] = this[i + 1];
@@ -81,7 +77,7 @@ function MyArrayPrototype() {
     return value;
   };
 
-  this.reverse = function () {
+  reverse = function () {
     for (let i = 0; i < Math.floor(this.length / 2); i++) {
       [this[i], this[this.length - 1 - i]] = [this[this.length - 1 - i], this[i]];
     };
@@ -89,33 +85,33 @@ function MyArrayPrototype() {
     return this;
   };
 
-  this.concat = function (...value) {
+  concat = function (...value) {
     let newArr = new MyArray();
-
     for (let i of this) {
-      newArr.push(i);
+      newArr[newArr.length] = i;
+      newArr.length++;
     };
 
     for (let j of value) {
-      for (let a = 0; a < j.length; a++) {
-        newArr.push(j[a])
-      };
+      for (let b of j) {
+        newArr[newArr.length] = b;
+        newArr.length++;
+      }
     };
-    return newArr;   
+    return newArr;
   };
 
 };
 
+const arr = new MyArray();
 
-MyArray.prototype = new MyArrayPrototype;
+arr.push(1, 2213123, 'test', 12312312312);
 
-const arr = new this.MyArray();
 
-arr.push(1);
-arr.push(2213123);
-arr.push('test');
-arr.push(12312312312);
-arr.push('ololo');
+const arr2 = new MyArray();
+
+arr2.push(1, 2213123, 'test', 12312312312);
+
 
 
 //пример выполнения forEach
