@@ -57,12 +57,15 @@ class MyArray {
     return newArr;
   };
 
-  unshift = function (value) {
-    for (let i = 0; i < this.length; i++) {
-      this[this.length - i] = this[this.length - (1 + i)];
-    };
-    this[0] = value;
-    this.length++;
+  unshift = function (...value) {
+    for (let v of value) {
+      for (let i = 0; i < this.length; i++) {
+        this[this.length - i] = this[this.length - (1 + i)];
+      };
+      this[0] = v;
+      this.length++;
+    }
+
     return this.length;
   };
 
@@ -88,15 +91,17 @@ class MyArray {
   concat = function (...value) {
     let newArr = new MyArray();
     for (let i of this) {
-      newArr[newArr.length] = i;
-      newArr.length++;
+      newArr.push(i)
     };
 
     for (let j of value) {
-      for (let b of j) {
-        newArr[newArr.length] = b;
-        newArr.length++;
+      if (isMyArray(j)) {
+        for (let b of j) {
+          newArr.push(b);
+        }
+        newArr.push(j);
       }
+
     };
     return newArr;
   };
