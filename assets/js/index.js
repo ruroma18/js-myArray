@@ -21,11 +21,7 @@ class MyArray {
     return returnObject;
   }
 
-  isMyArray(arg) {
-    return arg instanceof MyArray;
-  }
-
-  push = function (...value) {
+  push(...value) {
     for (let i of value) {
       this[this.length] = i;
       this.length++;
@@ -34,7 +30,7 @@ class MyArray {
     return this.length;
   };
 
-  pop = function () {
+  pop() {
     const value = this[this.length - 1];
     delete this[this.length - 1];
     this.length--;
@@ -42,13 +38,13 @@ class MyArray {
     return value;
   };
 
-  forEach = function (callback) {
+  forEach(callback) {
     for (let i = 0; i < this.length; i++) {
       callback(this[i], i, this);
     };
   };
 
-  map = function (callback) {
+  map(callback) {
     let newArr = new MyArray();
     for (let i = 0; i < this.length; i++) {
       newArr.push(callback(this[i], i, this))
@@ -57,7 +53,7 @@ class MyArray {
     return newArr;
   };
 
-  unshift = function (...value) {
+  unshift(...value) {
     for (let v of value) {
       for (let i = 0; i < this.length; i++) {
         this[this.length - i] = this[this.length - (1 + i)];
@@ -69,18 +65,17 @@ class MyArray {
     return this.length;
   };
 
-  shift = function () {
+  shift() {
     const value = this[0];
     for (let i = 0; i < this.length; i++) {
       this[i] = this[i + 1];
     };
 
-    delete this[this.length - 1];
-    this.length--;
+    this.pop();
     return value;
   };
 
-  reverse = function () {
+  reverse() {
     for (let i = 0; i < Math.floor(this.length / 2); i++) {
       [this[i], this[this.length - 1 - i]] = [this[this.length - 1 - i], this[i]];
     };
@@ -88,44 +83,50 @@ class MyArray {
     return this;
   };
 
-  concat = function (...value) {
+  concat(...values) {
     let newArr = new MyArray();
     for (let i of this) {
-      newArr.push(i)
+      newArr.push(i);
     };
 
-    for (let j of value) {
-      if (isMyArray(j)) {
-        for (let b of j) {
-          newArr.push(b);
-        }
-        newArr.push(j);
-      }
-
+    for (let value of values) {
+      if (isMyArray(value)) {
+        for (let j of value) {
+          newArr.push(j);
+        };
+      } else {
+        newArr.push(value);
+      };
     };
     return newArr;
   };
 
 };
 
-const arr = new MyArray();
+function isMyArray(arg) {
+  return arg instanceof MyArray;
+}
 
-arr.push(1, 2213123, 'test', 12312312312);
+// check functions
+
+// const arr = new MyArray();
+// arr.push(1, 2213123, 'test', 12312312312);
 
 
-const arr2 = new MyArray();
+// const arr2 = new MyArray();
+// arr2.push(2, 3, 'hello', 4);
 
-arr2.push(1, 2213123, 'test', 12312312312);
-
+// check isMyArray
+// console.log(isMyArray(arr));
 
 
 //пример выполнения forEach
-arr.forEach(function count(val, index, arr) {
-  console.log(`Item ${val} has index ${index}`);
-})
+// arr.forEach(function count(val, index, arr) {
+//   console.log(`Item ${val} has index ${index}`);
+// })
 
 //пример выполнения map
 
-let arrMap = arr.map(function sqrt(val) {
-  return val * 2;
-});
+// let arrMap = arr.map(function sqrt(val) {
+//   return val * 2;
+// });
