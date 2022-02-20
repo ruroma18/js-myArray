@@ -6,6 +6,10 @@ class MyArray {
     this.length = 0;
   }
 
+  static isMyArray(arg) {
+    return arg instanceof MyArray;
+  }
+
   [Symbol.iterator] = function () {
     let i = 0;
     let context = this;
@@ -54,11 +58,15 @@ class MyArray {
   };
 
   unshift(...value) {
-    for (let v of value) {
-      for (let i = 0; i < this.length; i++) {
-        this[this.length - i] = this[this.length - (1 + i)];
-      };
-      this[0] = v;
+    debugger;
+    let numberOfValue = value.length;
+
+    for (let i = 0; i < this.length; i++) {
+      this[this.length + 1 - i] = this[this.length - (i + 1)];
+    }
+
+    for (let j = 0; j < numberOfValue; j++) {
+      this[j] = value[j];
       this.length++;
     }
 
@@ -90,10 +98,8 @@ class MyArray {
     };
 
     for (let value of values) {
-      if (isMyArray(value)) {
-        for (let j of value) {
-          newArr.push(j);
-        };
+      if (MyArray.isMyArray(value)) {
+        newArr.push(...value);
       } else {
         newArr.push(value);
       };
@@ -103,9 +109,7 @@ class MyArray {
 
 };
 
-function isMyArray(arg) {
-  return arg instanceof MyArray;
-}
+
 
 // check functions
 
