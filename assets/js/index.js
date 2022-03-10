@@ -115,29 +115,3 @@ class MyArray {
   };
 
 };
-
-
-
-// check functions
-
-const arr = new MyArray();
-arr.push(1, 2213123, 'test', 12312312312);
-
-
-const arr2 = new MyArray();
-arr2.push(2, 3, 'hello', 4);
-
-// check isMyArray
-// console.log(isMyArray(arr));
-
-
-//пример выполнения forEach
-// arr.forEach(function count(val, index, arr) {
-//   console.log(`Item ${val} has index ${index}`);
-// })
-
-//пример выполнения map
-
-let arrMap = arr.map(function sqrt(val) {
-  return val * 2;
-});
