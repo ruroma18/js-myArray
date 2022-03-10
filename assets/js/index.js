@@ -10,7 +10,7 @@ class MyArray {
     return arg instanceof MyArray;
   }
 
-  [Symbol.iterator] = function () {
+  [Symbol.iterator] () {
     let i = 0;
     let context = this;
     const returnObject = {
@@ -36,10 +36,14 @@ class MyArray {
 
   pop() {
     const value = this[this.length - 1];
-    delete this[this.length - 1];
+    if (this.length > 0) {
+      delete this[this.length - 1];
     this.length--;
 
     return value;
+    }
+    return new Error('Array is empty');
+    
   };
 
   forEach(callback) {
@@ -49,7 +53,7 @@ class MyArray {
   };
 
   map(callback) {
-    let newArr = new MyArray();
+    const newArr = new MyArray();
     for (let i = 0; i < this.length; i++) {
       newArr.push(callback(this[i], i, this))
     };
@@ -58,11 +62,10 @@ class MyArray {
   };
 
   unshift(...value) {
-    debugger;
-    let numberOfValue = value.length;
+    const numberOfValue = value.length;
 
     for (let i = 0; i < this.length; i++) {
-      this[this.length + 1 - i] = this[this.length - (i + 1)];
+      this[this.length - i] = this[this.length - (i + 1)];
     }
 
     for (let j = 0; j < numberOfValue; j++) {
@@ -75,12 +78,16 @@ class MyArray {
 
   shift() {
     const value = this[0];
-    for (let i = 0; i < this.length; i++) {
-      this[i] = this[i + 1];
-    };
-
-    this.pop();
-    return value;
+    if (this.length > 0) {
+      for (let i = 0; i < this.length; i++) {
+        this[i] = this[i + 1];
+      };
+  
+      this.pop();
+      return value;
+    }
+    return new Error('Array is empty');
+    
   };
 
   reverse() {
@@ -92,7 +99,7 @@ class MyArray {
   };
 
   concat(...values) {
-    let newArr = new MyArray();
+    const newArr = new MyArray();
     for (let i of this) {
       newArr.push(i);
     };
@@ -113,12 +120,12 @@ class MyArray {
 
 // check functions
 
-// const arr = new MyArray();
-// arr.push(1, 2213123, 'test', 12312312312);
+const arr = new MyArray();
+arr.push(1, 2213123, 'test', 12312312312);
 
 
-// const arr2 = new MyArray();
-// arr2.push(2, 3, 'hello', 4);
+const arr2 = new MyArray();
+arr2.push(2, 3, 'hello', 4);
 
 // check isMyArray
 // console.log(isMyArray(arr));
@@ -131,6 +138,6 @@ class MyArray {
 
 //пример выполнения map
 
-// let arrMap = arr.map(function sqrt(val) {
-//   return val * 2;
-// });
+let arrMap = arr.map(function sqrt(val) {
+  return val * 2;
+});
