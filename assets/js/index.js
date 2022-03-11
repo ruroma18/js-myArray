@@ -65,7 +65,7 @@ class MyArray {
     const numberOfValue = value.length;
 
     for (let i = 0; i < this.length; i++) {
-      this[this.length - i] = this[this.length - (i + 1)];
+      this[this.length + numberOfValue - i - 1] = this[this.length - i - 1];
     }
 
     for (let j = 0; j < numberOfValue; j++) {
